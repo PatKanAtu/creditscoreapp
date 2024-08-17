@@ -13,11 +13,16 @@ def create_model():
                      'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1', 'PAY_AMT2', 'PAY_AMT3',
                      'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
 
+    # Consider using more realistic training data instead of random
     X_train = pd.DataFrame(np.random.rand(100, len(feature_names)), columns=feature_names)
     y_train = np.random.randint(2, size=100)
 
     model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000))
     model.fit(X_train, y_train)
+    
+    # Debugging: Check model coefficients
+    st.write("Logistic Regression Coefficients:")
+    st.write(model.named_steps['logisticregression'].coef_)
     
     return model, feature_names
 
