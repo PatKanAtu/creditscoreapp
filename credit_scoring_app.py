@@ -42,6 +42,13 @@ def get_user_input(feature_names):
     
     return user_data
 
+def ensure_valid_input(user_data, feature_names):
+    for feature in feature_names:
+        if feature not in user_data.columns:
+            user_data[feature] = 0  # Fill missing features with default value 0
+    user_data = user_data[feature_names]  # Ensure the correct order of features
+    return user_data
+
 def display_feature_importance(logistic_model, feature_names):
     importance = logistic_model.coef_[0]
     indices = np.argsort(importance)[::-1]
@@ -69,6 +76,8 @@ def main():
     model, feature_names = create_model()
     
     user_data = get_user_input(feature_names)
+    
+    user_data = ensure_valid_input(user_data, feature_names)  # Ensure all required features are present
 
     if st.button("Get Prediction"):
         prob_default = model.predict_proba(user_data)[0][1]
