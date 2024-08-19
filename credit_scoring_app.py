@@ -24,17 +24,21 @@ def create_model():
 def get_user_input():
     st.header("Input Your Financial Data")
 
+    education_options = ["Graduate School", "University", "High School", "Others"]
+    marriage_options = ["Married", "Single", "Others"]
+    pay_status_options = ["On Time", "1 Month Late", "2 Months Late", "3+ Months Late"]
+
     with st.form(key='user_input_form'):
         limit_bal = st.number_input("Credit Limit Balance (e.g., $10,000)", min_value=0, help="Total amount of credit available to you.")
         sex = st.selectbox("Sex", options=["Male", "Female"], help="Your gender.")
-        education = st.selectbox("Education Level", options=["Graduate School", "University", "High School", "Others"], help="Your highest education level.")
-        marriage = st.selectbox("Marital Status", options=["Married", "Single", "Others"], help="Your marital status.")
+        education = st.selectbox("Education Level", options=education_options, help="Your highest education level.")
+        marriage = st.selectbox("Marital Status", options=marriage_options, help="Your marital status.")
         age = st.slider("Age", min_value=18, max_value=100, help="Your current age.")
 
         st.subheader("Payment History (Past 7 Months)")
         pay_status = []
         for i in range(7):
-            pay_status.append(st.selectbox(f"Payment Status {i}th Last Month", options=["On Time", "1 Month Late", "2 Months Late", "3+ Months Late"], index=0))
+            pay_status.append(st.selectbox(f"Payment Status {i}th Last Month", options=pay_status_options, index=0))
         
         st.subheader("Billing & Payment Amounts")
         bill_amt = []
